@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
-import Swal from 'sweetalert2'; // ✅ Import SweetAlert2
+import Swal from 'sweetalert2';
 
 export const Contact: React.FC = () => {
   const { t } = useLanguage();
@@ -38,7 +38,7 @@ export const Contact: React.FC = () => {
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
-      }
+      },
     });
 
     try {
@@ -97,7 +97,7 @@ export const Contact: React.FC = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 relative overflow-hidden">
+    <section id="contact" className="py-20 relative z-0 overflow-hidden">
       <div className="container mx-auto px-6" ref={ref}>
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -210,9 +210,9 @@ export const Contact: React.FC = () => {
         </div>
       </div>
 
-      {/* Background blur elements */}
-      <div className="absolute top-20 left-20 w-80 h-80 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 right-20 w-64 h-64 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full blur-3xl" />
+      {/* ✅ Background Blur: tidak mengganggu klik */}
+      <div className="pointer-events-none absolute top-20 left-20 w-80 h-80 -z-10 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl" />
+      <div className="pointer-events-none absolute bottom-20 right-20 w-64 h-64 -z-10 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full blur-3xl" />
     </section>
   );
 };

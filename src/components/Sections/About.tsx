@@ -61,7 +61,18 @@ export const About: React.FC = () => {
 
             {/* Skills Tags */}
             <div className="flex flex-wrap gap-3 mb-8">
-              {['React', 'TypeScript', 'Vue.js', 'Tailwind','Bootsrap', 'Laravel', 'Mysql', 'Node.js', 'MongoDB','Express'].map((skill) => (
+              {[
+                'React',
+                'TypeScript',
+                'Vue.js',
+                'Tailwind',
+                'Bootsrap',
+                'Laravel',
+                'Mysql',
+                'Node.js',
+                'MongoDB',
+                'Express',
+              ].map((skill) => (
                 <motion.span
                   key={skill}
                   whileHover={{ scale: 1.05 }}
@@ -108,9 +119,9 @@ export const About: React.FC = () => {
         </div>
       </div>
 
-      {/* Background Elements */}
-      <div className="absolute top-20 right-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+      {/* Background Elements with pointer-events disabled */}
+      <div className="pointer-events-none absolute top-20 right-20 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl" />
+      <div className="pointer-events-none absolute bottom-20 left-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
     </section>
   );
 };
