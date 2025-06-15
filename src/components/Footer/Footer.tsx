@@ -67,7 +67,7 @@ export const Footer: React.FC = () => {
             <div className="flex items-center space-x-2">
               <span>{t('footer.made')}</span>
               <motion.img
-                src="https://muhamadayeshaaulia.github.io/portfolio-v3/project/react.png"
+                src="https://muhamadayeshaaulia.github.io/portfolio-v3/images/react.png"
                 alt="React Logo"
                 className="w-6 h-6"
                 animate={{ rotate: 360 }}
