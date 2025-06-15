@@ -66,7 +66,8 @@ To get a local copy up and running, follow these simple steps:
     ```
 
 
-Usage
+## Usage
+
 To view the portfolio locally, simply open the index.html file in your web browser.
 
 Bash
@@ -74,23 +75,26 @@ Bash
 open index.html
 If you have a local server setup (e.g., using Live Server in VS Code), you can serve the project through that for easier development and live reloading.
 
-Customization
+## Customization
 This portfolio is designed to be easily customizable. Here's how you can make it your own:
 
-Content:
+* Content:
 
 Edit index.html to update your personal information, project details, skills, and contact information.
 Look for comments in the HTML to guide you on which sections to modify.
-Styling:
+
+* Styling:
 
 The main styling is located in the assets/css (or assets/scss if you're using SCSS) directory.
 Modify variables (if present) or directly edit the CSS rules to change colors, fonts, spacing, and other visual aspects.
 If using SCSS, remember to compile your SCSS files to CSS after making changes.
-Images:
+
+* Images:
 
 Replace placeholder images in the assets/img directory with your own project screenshots, profile picture, or other relevant visuals.
 Contributing
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
+____________________
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
@@ -119,7 +123,7 @@ git push origin feature/AmazingFeature
 ## Contact
 Muhammad Ayeshaa Aulia - @shaxyyy__ - shaxyyy.03@gmail.com
 
-Project Link:
+## Project Link:
 ```bash
  https://github.com/muhamadayeshaaulia/portfolio-v3
  ```
