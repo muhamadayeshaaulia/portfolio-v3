@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Code, Server, Palette, BaselineIcon, PenTool as Tool,  Boxes  } from 'lucide-react';
+import { Code, Server, PenTool as Tool,  Boxes  } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext';
 
 export const Skills: React.FC = () => {
@@ -21,19 +21,19 @@ export const Skills: React.FC = () => {
     {
       icon: Server,
       title: t('skills.backend'),
-      skills: ['Node.js','Express', 'Django', 'MySqli', 'MongoDB'],
+      skills: ['Node.js','Express','MySqli', 'MongoDB'],
       color: 'from-green-500 to-emerald-500',
     },
     {
       icon: Boxes,
-      title: t('skills.basic'),
+      title: t('skils basic'),
       skills: ['Figma', 'Ms-Word', 'Ms-Excel', 'Power-Point', 'sheet', 'Capcut'],
       color: 'from-purple-500 to-pink-500',
     },
     {
       icon: Tool,
       title: t('skills.tools'),
-      skills: ['Git', 'Postman', 'draw.io'],
+      skills: ['Git', 'Postman', 'draw.io','Mailler'],
       color: 'from-orange-500 to-red-500',
     },
   ];

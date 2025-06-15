@@ -61,7 +61,7 @@ export const About: React.FC = () => {
 
             {/* Skills Tags */}
             <div className="flex flex-wrap gap-3 mb-8">
-              {['React', 'TypeScript', 'Vue.js', 'Tailwind','Bootsrap', 'Laravel', 'Mysql', 'Node.js', 'MongoDB','Exspress'].map((skill) => (
+              {['React', 'TypeScript', 'Vue.js', 'Tailwind','Bootsrap', 'Laravel', 'Mysql', 'Node.js', 'MongoDB','Express'].map((skill) => (
                 <motion.span
                   key={skill}
                   whileHover={{ scale: 1.05 }}
