@@ -29,7 +29,7 @@ export const Projects: React.FC = () => {
       title: 'Arisan-App',
       description:
         'Modern Arisan applications make it easy for administrators and participants to manage and register for Arisan, and notifications of winners are sent directly to the active Gmail of registered participants.',
-      image: 'https://muhamadayeshaaulia.github.io/project/arisanmantep.jpg',
+      image: 'https://github.com/muhamadayeshaaulia/portfolio-v3/blob/main/public/project/arisanmantep.jpg',
       tech: ['Laravel', 'Inertia.js', 'React.js', 'Tailwind'],
       demo: 'https://vt.tiktok.com/ZSkXGve2K/',
       code: 'https://github.com/muhamadayeshaaulia?tab=repositories',
