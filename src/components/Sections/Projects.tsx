@@ -29,7 +29,7 @@ export const Projects: React.FC = () => {
       title: 'Arisan-App',
       description:
         'Modern Arisan applications make it easy for administrators and participants to manage and register for Arisan, and notifications of winners are sent directly to the active Gmail of registered participants.',
-      image: 'https://github.com/muhamadayeshaaulia/portfolio-v3/blob/main/public/project/arisanmantep.jpg',
+      image: '/project/arisanmantep.jpg',
       tech: ['Laravel', 'Inertia.js', 'React.js', 'Tailwind'],
       demo: 'https://vt.tiktok.com/ZSkXGve2K/',
       code: 'https://github.com/muhamadayeshaaulia?tab=repositories',
@@ -38,7 +38,7 @@ export const Projects: React.FC = () => {
       title: 'Absensi-sekolah-Scan-QR',
       description:
         'Student and teacher attendance makes it easier for schools to manage the attendance list of students and teachers by using QR scan technology.',
-      image: 'https://muhamadayeshaaulia.github.io/project/absen.jpg',
+      image: '/project/absen.jpg',
       tech: ['CodeIgniter4', 'Bootstrap', 'API WhatsApp', 'Mysql', 'QRcode-Generator'],
       demo: 'https://vt.tiktok.com/ZSkXGVeGm/',
       code: 'https://github.com/muhamadayeshaaulia?tab=repositories',
@@ -47,7 +47,7 @@ export const Projects: React.FC = () => {
       title: 'Angkringan-Management & Kasir ',
       description:
         'Management of product goods and stock as well as transactions with product search using qr-code and availability of tables to be reserved',
-      image: 'https://muhamadayeshaaulia.github.io/project/angkringan2.jpg',
+      image: '/project/angkringan2.jpg',
       tech: ['Laravel', 'Inertia.js', 'Vue.js', 'Bootstrap', 'SweetAlert2', 'QR-Generator'],
       demo: 'https://vt.tiktok.com/ZSkXGwm4X/',
       code: 'https://github.com/muhamadayeshaaulia?tab=repositories',
@@ -56,7 +56,7 @@ export const Projects: React.FC = () => {
       title: 'Chat-App',
       description:
         'A real-time chat application using MongoDB API and Socket.io integration to connect data online, this application is still under development. If you are interested in contributing, you can contact me.',
-      image: 'https://muhamadayeshaaulia.github.io/project/chat.jpg',
+      image: '/project/chat.jpg',
       tech: ['MongoDB', 'Express', 'React.js', 'Node.js', 'DaisyUI', 'tailwind', 'Socket.io'],
       demo: 'https://vt.tiktok.com/ZSkXGwm4X/',
       code: 'https://github.com/muhamadayeshaaulia/chat-app',
