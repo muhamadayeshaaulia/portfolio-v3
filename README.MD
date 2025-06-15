@@ -30,22 +30,32 @@ To get a local copy up and running, follow these simple steps:
 
 Clone the repository:
 
-Bash
+## Installation
 
-git clone https://github.com/muhamadayeshaaulia/portfolio-v3.git
-Navigate to the project directory:
+To get a local copy up and running, follow these simple steps:
 
-Bash
+1.  **Clone the repository:**
 
-cd portfolio-v3
-Install dependencies (if any):
-If your project uses Node.js and has a package.json file (e.g., for SCSS compilation or other build tools), you'll need to install dependencies. If not, you can skip this step.
+    ```bash
+    git clone [https://github.com/muhamadayeshaaulia/portfolio-v3.git](https://github.com/muhamadayeshaaulia/portfolio-v3.git)
+    ```
 
-Bash
+2.  **Navigate to the project directory:**
 
-npm install
-# or
-yarn install
+    ```bash
+    cd portfolio-v3
+    ```
+
+3.  **Install dependencies (if any):**
+    If your project uses Node.js and has a `package.json` file (e.g., for SCSS compilation or other build tools), you'll need to install dependencies. If not, you can skip this step.
+
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
+
+
 Usage
 To view the portfolio locally, simply open the index.html file in your web browser.
 
