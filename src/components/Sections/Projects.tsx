@@ -44,7 +44,7 @@ export const Projects: React.FC = () => {
       code: 'https://github.com/muhamadayeshaaulia?tab=repositories',
     },
     {
-      title: 'Angkringan-Management & Kasir ',
+      title: 'Angkringan-Management & Kasir',
       description:
         'Management of product goods and stock as well as transactions with product search using qr-code and availability of tables to be reserved',
       image: 'https://muhamadayeshaaulia.github.io/portfolio-v3/project/angkringan2.jpg',
@@ -57,7 +57,7 @@ export const Projects: React.FC = () => {
       description:
         'A real-time chat application using MongoDB API and Socket.io integration to connect data online, this application is still under development. If you are interested in contributing, you can contact me.',
       image: 'https://muhamadayeshaaulia.github.io/portfolio-v3/project/chat.jpg',
-      tech: ['MongoDB', 'Express', 'React.js', 'Node.js', 'DaisyUI', 'tailwind', 'Socket.io'],
+      tech: ['MongoDB', 'Express', 'React.js', 'Node.js', 'DaisyUI', 'Tailwind', 'Socket.io'],
       demo: 'https://vt.tiktok.com/ZSkXGwm4X/',
       code: 'https://github.com/muhamadayeshaaulia/chat-app',
     },
@@ -98,6 +98,7 @@ export const Projects: React.FC = () => {
                   src={project.image}
                   alt={project.title}
                   className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               </div>
@@ -121,7 +122,7 @@ export const Projects: React.FC = () => {
                   ))}
                 </div>
 
-                <div className="flex space-x-4">
+                <div className="flex flex-wrap gap-4">
                   <motion.a
                     href={project.demo}
                     whileHover={{ scale: 1.05 }}
@@ -172,6 +173,7 @@ export const Projects: React.FC = () => {
               <button
                 onClick={closeModal}
                 className="absolute top-4 right-4 text-white hover:text-red-500 transition"
+                aria-label="Close Modal"
               >
                 <X size={32} />
               </button>
@@ -185,9 +187,9 @@ export const Projects: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Background Dekorasi */}
-      <div className="absolute top-20 right-20 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+      {/* Dekorasi Background (pointer-events-none agar tidak menutupi klik mobile) */}
+      <div className="pointer-events-none absolute top-20 right-20 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl" />
+      <div className="pointer-events-none absolute bottom-20 left-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
     </section>
   );
 };
