@@ -1,32 +1,42 @@
-Personal Portfolio Website (v3)
+# Personal Portfolio Website (v3)
+
 This repository hosts the third iteration of my personal portfolio website, a platform designed to showcase my skills, projects, and experiences as a web developer. Built with modern web technologies, this portfolio aims to provide a clean, responsive, and engaging experience for visitors.
 
-Table of Contents
-Features
-Technologies Used
-Installation
-Usage
-Customization
-Contributing
-License
-Contact
-Features
-Modern UI/UX: A clean and intuitive design for a seamless Browse experience.
-Responsive Layout: Optimized for various devices, from desktops to mobile phones.
-Project Showcase: Dedicated sections to highlight key projects with descriptions and links.
-Skill Overview: Clearly presents technical skills and proficiencies.
-About Me Section: Provides a brief introduction and professional background.
-Contact Form: Easy way for visitors to get in touch (requires backend integration if you want to make it functional).
-Smooth Animations: Subtle animations for a more dynamic feel.
-Technologies Used
+## Table of Contents
+
+-   [Features](#features)
+-   [Technologies Used](#technologies-used)
+-   [Installation](#installation)
+-   [Usage](#usage)
+-   [Customization](#customization)
+-   [Contributing](#contributing)
+-   [License](#license)
+-   [Contact](#contact)
+
+---
+
+## Features
+
+-   **Modern UI/UX:** A clean and intuitive design for a seamless Browse experience.
+-   **Responsive Layout:** Optimized for various devices, from desktops to mobile phones.
+-   **Project Showcase:** Dedicated sections to highlight key projects with descriptions and links.
+-   **Skill Overview:** Clearly presents technical skills and proficiencies.
+-   **About Me Section:** Provides a brief introduction and professional background.
+-   **Contact Form:** Easy way for visitors to get in touch (requires backend integration if you want to make it functional).
+-   **Smooth Animations:** Subtle animations for a more dynamic feel.
+
+---
+
+## Technologies Used
+
 This project is built using the following technologies:
 
-HTML5: For structuring the content.
-CSS3 (with SCSS/SASS): For styling, leveraging the power of preprocessors for maintainability.
-JavaScript (ES6+): For interactive elements and dynamic behavior.
-No specific JavaScript framework/library used beyond vanilla JavaScript.
-Installation
-To get a local copy up and running, follow these simple steps:
+-   **HTML5:** For structuring the content.
+-   **CSS3 (with SCSS/SASS):** For styling, leveraging the power of preprocessors for maintainability.
+-   **JavaScript (ES6+):** For interactive elements and dynamic behavior.
+-   **No specific JavaScript framework/library used beyond vanilla JavaScript.**
+
+---
 
 Clone the repository:
 
@@ -85,20 +95,34 @@ Contributions are what make the open-source community such an amazing place to l
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 Don't forget to give the project a star! Thanks again!
 
-Fork the Project
-Create your Feature Branch (git checkout -b feature/AmazingFeature)
-Commit your Changes (git commit -m 'Add some AmazingFeature')
-Push to the Branch (git push origin feature/AmazingFeature)
-Open a Pull Request
-License
-Distributed under the MIT License. See LICENSE for more information.
+# Fork the Project
 
-Contact
-Muhammad Ayeshaa Aulia - @your_twitter (or your preferred social media/website link) - your_email@example.com
+Create your Feature Branch 
+```bash 
+git checkout -b feature/AmazingFeature
+```
 
-Project Link: https://github.com/muhamadayeshaaulia/portfolio-v3
+Commit your Changes
+ ```bash 
+git commit -m 'Add some AmazingFeature
+```
+Push to the Branch 
+```bash
+git push origin feature/AmazingFeature
+```
+* Open a Pull Request
 
-Sumber
+# License
+
+* Distributed under the MIT License. See LICENSE for more information.
+
+## Contact
+Muhammad Ayeshaa Aulia - @shaxyyy__ - shaxyyy.03@gmail.com
+
+Project Link:
+```bash
+ https://github.com/muhamadayeshaaulia/portfolio-v3
+ ```
 
 
 
