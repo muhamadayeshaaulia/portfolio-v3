@@ -56,7 +56,6 @@ const Resume = () => {
       scale: 0.9,
       // transformOrigin diatur di sini untuk rotasi yang realistis
       transformOrigin: direction > 0 ? 'left center' : 'right center',
-      // Mengatur zIndex yang sesuai untuk animasi masuk dan keluar
       zIndex: 1 // Halaman yang masuk awalnya di atas
     }),
     center: {
@@ -72,7 +71,6 @@ const Resume = () => {
       scale: 0.9,
       // transformOrigin diatur di sini untuk rotasi yang realistis
       transformOrigin: direction > 0 ? 'right center' : 'left center',
-      // Mengatur zIndex yang sesuai untuk animasi masuk dan keluar
       zIndex: 2 // Halaman yang keluar di atas halaman yang masuk
     })
   };
@@ -88,12 +86,12 @@ const Resume = () => {
     <section id="resume" className="py-16 px-6 md:px-12 text-center rounded-lg shadow-lg m-8">
       {/* Judul yang responsif */}
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 rounded-md">
-        {t('resume.title')}
+        {t('resume.title')} {/* Menggunakan kunci terjemahan 'resume.title' */}
       </h2>
       {/* Container utama untuk animasi buku: responsif dan menjaga rasio aspek */}
-      {/* Perubahan: max-w-sm diubah menjadi max-w-md untuk tampilan mobile yang lebih besar */}
-      <div className="relative mx-auto w-full **max-w-md** sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl 2xl:max-w-3xl"
-           style={{ paddingTop: '100%', perspective: '1200px' }}>
+      {/* Gunakan max-w-sm untuk mobile, dan tingkatkan secara bertahap */}
+      <div className="relative mx-auto w-full max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl 2xl:max-w-3xl"
+           style={{ paddingTop: '100%', perspective: '1200px' }}>{/* Rasio aspek A4 portrait (tinggi/lebar), 29.7cm/21cm */}
         <AnimatePresence initial={false} custom={direction}>
           <motion.div
             key={currentPage} // Kunci unik untuk setiap halaman agar AnimatePresence berfungsi
@@ -122,29 +120,23 @@ const Resume = () => {
           </motion.div>
         </AnimatePresence>
 
-        {/* Tombol Navigasi - Pastikan z-index lebih tinggi dari gambar atau animasi */}
-        {/* Perubahan: px-2 diubah menjadi px-4 untuk padding horizontal yang lebih besar di mobile */}
-        {/* Tambahan: z-index: 30 (lebih tinggi dari zIndex animasi pageVariants) */}
-        <div className="absolute inset-y-0 left-0 right-0 flex justify-between items-center **z-30** **px-4**">
+        {/* Tombol Navigasi - Pastikan z-index lebih tinggi dari gambar */}
+        <div className="absolute inset-y-0 left-0 right-0 flex justify-between items-center z-20 px-2 sm:px-4"> {/* Kurangi padding horizontal untuk mobile */}
           <button
             onClick={handlePrevPage}
-            // Perubahan: p-2 diubah menjadi p-3 untuk tombol yang lebih besar
-            className="**p-3** sm:p-4 bg-gray-700 text-white rounded-full shadow-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-500 transition-colors"
+            className="p-2 sm:p-3 bg-gray-700 text-white rounded-full shadow-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-500 transition-colors"
             aria-label={t('resume.prev_page_button')}
           >
-            {/* Perubahan: h-5 w-5 diubah menjadi h-6 w-6 untuk ikon yang lebih besar */}
-            <svg xmlns="http://www.w3.org/2000/svg" className="**h-6 w-6** sm:h-7 sm:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           <button
             onClick={handleNextPage}
-            // Perubahan: p-2 diubah menjadi p-3 untuk tombol yang lebih besar
-            className="**p-3** sm:p-4 bg-gray-700 text-white rounded-full shadow-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors"
+            className="p-2 sm:p-3 bg-gray-700 text-white rounded-full shadow-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors"
             aria-label={t('resume.next_page_button')}
           >
-            {/* Perubahan: h-5 w-5 diubah menjadi h-6 w-6 untuk ikon yang lebih besar */}
-            <svg xmlns="http://www.w3.org/2000/svg" className="**h-6 w-6** sm:h-7 sm:w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
             </svg>
           </button>
