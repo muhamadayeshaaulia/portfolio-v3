@@ -13,7 +13,7 @@ declare global {
 const supabaseUrl = 'https://qlpubmruapkfndexuzod.supabase.co';
 const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFscHVibXJ1YXBrZm5kZXh1em9kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAwMjc0NzgsImV4cCI6MjA2NTYwMzQ3OH0.iWfDfP1UoomUH9xS1Pg3mq_qUiwRWCPHvSxr-XetvYE';
 
-// Inisialisasi klien Supabase (dengan tipe 'any' karena dimuat dari CDN)
+
 let supabase: any;
 
 // Antarmuka (interface) untuk struktur data komentar
@@ -193,21 +193,23 @@ export const Comments: React.FC = () => {
       setNewName('');
       setNewComment('');
       if (window.Swal) {
-        window.Swal.fire({
+        await window.Swal.fire({
           title: t('swal.success_title'),
           text: t('swal.success_text'),
           icon: 'success',
         });
+        window.location.reload(); // Refresh setelah sukses
       }
     } catch (e: any) {
       console.error("Error adding comment: ", e.message);
       if (window.Swal) {
-        window.Swal.fire({
-          title: t('swal.failed_title'),
-          text: t('swal.failed_text') + ` (${e.message || 'unknown error'})`, // Tambahkan pesan error spesifik jika ada
-          icon: 'error',
-        });
-      }
+      await window.Swal.fire({
+        title: t('swal.failed_title'),
+        text: t('swal.failed_text') + ` (${e.message || 'unknown error'})`,
+        icon: 'error',
+      });
+      window.location.reload(); // Refresh juga setelah gagal
+    }
     } finally {
       setLoading(false);
     }
