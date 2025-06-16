@@ -6,18 +6,21 @@ import React from 'react';
  * CATATAN PENTING:
  * Browser TIDAK DAPAT secara langsung mengekstrak halaman dari file PDF
  * untuk ditampilkan di tag <img>. Anda HARUS mengonversi setiap halaman
- * dari file PDF Anda (misalnya, "resume.pdf") menjadi file gambar terpisah
- * (misalnya, "resume-page-1.png", "resume-page-2.png", dst.) terlebih dahulu.
+ * dari file PDF Anda (misalnya, "cv.pdf") menjadi file gambar terpisah
+ * (misalnya, "cv-page-1.png", "cv-page-2.png", dst.) terlebih dahulu.
  *
  * Kemudian, tempatkan file-file gambar tersebut di folder 'public/pdf' proyek Anda.
  * Kode ini akan menampilkan gambar-gambar yang sudah dikonversi tersebut.
  */
 const Resume = () => {
   // Ganti URL placeholder ini dengan path ke file gambar aktual dari halaman PDF resume Anda.
-  // Contoh: Jika Anda telah mengonversi "resume.pdf" menjadi "resume-page-1.png",
-  // dan menyimpannya di folder 'public/pdf', maka path-nya adalah "/pdf/resume-page-1.png".
+  // Contoh: Jika Anda telah mengonversi "cv.pdf" menjadi "cv-page-1.png",
+  // dan menyimpannya di folder 'public/pdf', maka path-nya adalah "/pdf/cv-page-1.png".
   const resumeImageUrls = [
-    "https://muhamadayeshaaulia.github.io/portfolio-v3/pdf/cv.pdf", // Asumsi Anda memiliki file ini di public/pdf
+    // Pastikan ini adalah PATH KE FILE GAMBAR (e.g., .png, .jpg), BUKAN .pdf
+    "https://muhamadayeshaaulia.github.io/portfolio-v3/pdf/cv1.jpg", // Asumsi Anda memiliki file ini di public/pdf setelah konversi
+    "https://muhamadayeshaaulia.github.io/portfolio-v3/pdf/cv2.jpg", // Tambahkan ini jika cv Anda punya halaman kedua yang sudah dikonversi
+    "https://muhamadayeshaaulia.github.io/portfolio-v3/pdf/cv3.jpg", // Tambahkan lebih banyak path jika cv Anda memiliki lebih banyak halaman
   ];
 
   return (
@@ -46,9 +49,9 @@ const Resume = () => {
           Anda bisa melihat resume lengkap saya di atas.
           Jika Anda ingin mengunduh, Anda bisa menambahkan tautan unduhan PDF di sini.
         </p>
-        {/* Tombol unduh PDF - Ganti href dengan path ke file PDF Anda yang sebenarnya (misal: /pdf/my-resume.pdf) */}
+        {/* Tombol unduh PDF - Menggunakan URL PDF yang Anda berikan */}
         <a
-          href="https://muhamadayeshaaulia.github.io/portfolio-v3/pdf/cv.pdf" // Ganti dengan path ke file PDF Anda di folder public/pdf
+          href="https://muhamadayeshaaulia.github.io/portfolio-v3/pdf/cv.pdf"
           download="cv.pdf"
           className="inline-block mt-4 px-6 py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 transition-colors shadow-lg"
         >
