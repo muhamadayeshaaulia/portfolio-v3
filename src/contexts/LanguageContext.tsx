@@ -90,6 +90,8 @@ const translations = {
     'swal.failed_text': 'Failed to send comment. Please try again.',
     'swal.error_fetch_comments_title': 'Failed to Load Comments!',
     'swal.error_fetch_comments_text': 'An error occurred while loading comments.',
+    'swal.not_ready_for_like': 'Like system not ready yet. Please try again shortly.',
+    'swal.failed_like_text': 'Failed to update like. Please try again.'
   },
   id: {
     // Navigation
@@ -169,6 +171,8 @@ const translations = {
     'swal.failed_text': 'Komentar gagal dikirim. Coba lagi.',
     'swal.error_fetch_comments_title': 'Gagal Memuat Komentar!',
     'swal.error_fetch_comments_text': 'Terjadi kesalahan saat memuat komentar.',
+    'swal.not_ready_for_like': 'Sistem suka belum siap. Silakan coba lagi sebentar.',
+    'swal.failed_like_text': 'Gagal memperbarui suka. Silakan coba lagi.'
   }
 };
 

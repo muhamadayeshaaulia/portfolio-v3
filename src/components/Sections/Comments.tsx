@@ -10,9 +10,9 @@ declare global {
     supabase: any; // Supabase client global object
   }
 }
+
 const supabaseUrl = 'https://qlpubmruapkfndexuzod.supabase.co';
 const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFscHVibXJ1YXBrZm5kZXh1em9kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTAwMjc0NzgsImV4cCI6MjA2NTYwMzQ3OH0.iWfDfP1UoomUH9xS1Pg3mq_qUiwRWCPHvSxr-XetvYE';
-
 
 let supabase: any;
 
@@ -23,6 +23,8 @@ interface Comment {
   comment: string;
   user_id_session: string;
   created_at: string;
+  likes: number; // Menambahkan properti likes
+  liked_by: string[]; // Menambahkan properti liked_by (array of user_id_session)
 }
 
 export const Comments: React.FC = () => {
@@ -92,6 +94,7 @@ export const Comments: React.FC = () => {
         if (payload.eventType === 'INSERT') {
           setComments(currentComments => [payload.new as Comment, ...currentComments].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()));
         } else if (payload.eventType === 'UPDATE') {
+          // Ketika ada update, cari komentar yang diupdate dan ganti dengan data payload.new
           setComments(currentComments =>
             currentComments.map(comment =>
               comment.id === payload.old.id ? (payload.new as Comment) : comment
@@ -110,7 +113,7 @@ export const Comments: React.FC = () => {
       try {
         const { data, error } = await supabase
           .from('comments')
-          .select('*')
+          .select('*, likes, liked_by') // Pastikan mengambil kolom likes dan liked_by
           .order('created_at', { ascending: false }); // Urutkan berdasarkan timestamp pembuatan
 
         if (error) throw error;
@@ -186,6 +189,8 @@ export const Comments: React.FC = () => {
             name: newName.trim(),
             comment: newComment.trim(),
             user_id_session: userId,
+            likes: 0, // Inisialisasi likes ke 0 saat komentar baru ditambahkan
+            liked_by: [], // Inisialisasi liked_by dengan array kosong
           },
         ]);
 
@@ -203,17 +208,80 @@ export const Comments: React.FC = () => {
     } catch (e: any) {
       console.error("Error adding comment: ", e.message);
       if (window.Swal) {
-      await window.Swal.fire({
-        title: t('swal.failed_title'),
-        text: t('swal.failed_text') + ` (${e.message || 'unknown error'})`,
-        icon: 'error',
-      });
-      window.location.reload(); // Refresh juga setelah gagal
-    }
+        await window.Swal.fire({
+          title: t('swal.failed_title'),
+          text: t('swal.failed_text') + ` (${e.message || 'unknown error'})`,
+          icon: 'error',
+        });
+        window.location.reload(); // Refresh juga setelah gagal
+      }
     } finally {
       setLoading(false);
     }
   };
+
+  // Fungsi baru untuk menangani like/unlike
+  const handleLike = async (commentId: string, currentLikes: number, currentLikedBy: string[]) => {
+    if (!supabase || !userId) {
+      if (window.Swal) {
+        window.Swal.fire({
+          title: t('swal.error_title'),
+          text: t('swal.not_ready_for_like'),
+          icon: 'error',
+        });
+      }
+      return;
+    }
+
+    const hasLiked = currentLikedBy.includes(userId);
+    let newLikes: number;
+    let newLikedBy: string[];
+
+    if (hasLiked) {
+      // Jika user sudah like, batalkan like
+      newLikes = currentLikes - 1;
+      newLikedBy = currentLikedBy.filter(id => id !== userId);
+    } else {
+      // Jika user belum like, tambahkan like
+      newLikes = currentLikes + 1;
+      newLikedBy = [...currentLikedBy, userId];
+    }
+
+    try {
+      // Perbarui state lokal secara optimis
+      setComments(currentComments =>
+        currentComments.map(comment =>
+          comment.id === commentId ? { ...comment, likes: newLikes, liked_by: newLikedBy } : comment
+        )
+      );
+
+      const { error } = await supabase
+        .from('comments')
+        .update({ likes: newLikes, liked_by: newLikedBy })
+        .eq('id', commentId);
+
+      if (error) throw error;
+
+      // Tidak perlu Swal alert sukses jika ingin UX yang lebih halus
+      // Supabase Realtime akan memperbarui UI secara konsisten
+    } catch (e: any) {
+      console.error("Error updating like: ", e.message);
+      // Jika terjadi error, kembalikan state lokal ke kondisi sebelumnya
+      setComments(currentComments =>
+        currentComments.map(comment =>
+          comment.id === commentId ? { ...comment, likes: currentLikes, liked_by: currentLikedBy } : comment
+        )
+      );
+      if (window.Swal) {
+        window.Swal.fire({
+          title: t('swal.failed_title'),
+          text: t('swal.failed_like_text') + ` (${e.message || 'unknown error'})`,
+          icon: 'error',
+        });
+      }
+    }
+  };
+
 
   return (
     <section id="comments" className="py-20 relative z-0 overflow-hidden">
@@ -329,6 +397,31 @@ export const Comments: React.FC = () => {
                           {new Date(comment.created_at).toLocaleString()}
                         </p>
                       )}
+                      {/* Bagian untuk tombol like */}
+                      <div className="flex items-center mt-2">
+                        <button
+                          onClick={() => handleLike(comment.id, comment.likes, comment.liked_by)}
+                          className={`flex items-center space-x-1 px-3 py-1 rounded-full text-sm transition-all
+                                    ${comment.liked_by.includes(userId || '') ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-blue-100 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-blue-900'}`}
+                          disabled={!userId} // Nonaktifkan jika userId belum siap
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-4 w-4"
+                            fill={comment.liked_by.includes(userId || '') ? "currentColor" : "none"}
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 22l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                            />
+                          </svg>
+                          <span>{comment.likes || 0}</span> {/* Tampilkan jumlah like */}
+                        </button>
+                      </div>
                     </div>
                   </motion.div>
                 ))}
