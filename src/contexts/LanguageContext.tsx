@@ -2,15 +2,17 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type Language = 'en' | 'id';
 
+// Perbarui interface LanguageContextType agar t menerima 'options'
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  t: (key: string, options?: { [key: string]: any }) => string; // Menambahkan 'options'
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 // Objek terjemahan lengkap yang menggabungkan terjemahan portofolio dan komentar
+// Perhatikan bagaimana 'resume.error_loading_page' sekarang berupa fungsi
 const translations = {
   en: {
     // Navigation
@@ -92,7 +94,14 @@ const translations = {
     'swal.error_fetch_comments_title': 'Failed to Load Comments!',
     'swal.error_fetch_comments_text': 'An error occurred while loading comments.',
     'swal.not_ready_for_like': 'Like system not ready yet. Please try again shortly.',
-    'swal.failed_like_text': 'Failed to update like. Please try again.'
+    'swal.failed_like_text': 'Failed to update like. Please try again.',
+
+    // Resume Section
+    'resume.title': 'My Resume',
+    'resume.description': 'You can view my complete resume above.',
+    'resume.download_prompt': 'If you wish to download, you can add a PDF download link here.',
+    'resume.download_button': 'Download Resume (PDF)',
+    'resume.error_loading_page': (options: { page: number }) => `Error Loading Page ${options.page}`
   },
   id: {
     // Navigation
@@ -174,17 +183,33 @@ const translations = {
     'swal.error_fetch_comments_title': 'Gagal Memuat Komentar!',
     'swal.error_fetch_comments_text': 'Terjadi kesalahan saat memuat komentar.',
     'swal.not_ready_for_like': 'Sistem suka belum siap. Silakan coba lagi sebentar.',
-    'swal.failed_like_text': 'Gagal memperbarui suka. Silakan coba lagi.'
+    'swal.failed_like_text': 'Gagal memperbarui suka. Silakan coba lagi.',
+
+    // Resume Section
+    'resume.title': 'Resume Saya',
+    'resume.description': 'Anda dapat melihat resume lengkap saya di atas.',
+    'resume.download_prompt': 'Jika Anda ingin mengunduh, Anda dapat menambahkan tautan unduhan PDF di sini.',
+    'resume.download_button': 'Unduh Resume (PDF)',
+    // Contoh fungsi untuk terjemahan dinamis
+    'resume.error_loading_page': (options: { page: number }) => `Gagal Memuat Halaman ${options.page}`
   }
 };
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>('en');
 
-  const t = (key: string): string => {
-    // Memastikan akses yang aman ke terjemahan.
-    // Jika bahasa atau kunci tidak ditemukan, kembalikan kunci aslinya.
-    return translations[language]?.[key as keyof typeof translations['en']] || key;
+  // Perbarui implementasi fungsi t untuk menangani 'options'
+  const t = (key: string, options?: { [key: string]: any }): string => {
+    // Dapatkan terjemahan untuk kunci dan bahasa saat ini
+    const translation = (translations[language] as any)[key]; // 'as any' sementara untuk mengatasi kompleksitas tipe
+
+    // Jika terjemahan adalah fungsi (untuk terjemahan dinamis)
+    if (typeof translation === 'function') {
+      return translation(options || {}); // Panggil fungsi dengan opsi
+    }
+
+    // Jika terjemahan adalah string
+    return (translation as string) || key; // Kembali ke kunci jika tidak ditemukan
   };
 
   return (
