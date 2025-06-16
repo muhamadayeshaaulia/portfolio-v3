@@ -19,6 +19,7 @@ const translations = {
     'nav.skills': 'Skills',
     'nav.projects': 'Projects',
     'nav.contact': 'Contact',
+    'nav.resume' : 'Resume',
 
     // Hero Section
     'hero.greeting': 'Hello, I\'m',
@@ -100,6 +101,7 @@ const translations = {
     'nav.skills': 'Keahlian',
     'nav.projects': 'Proyek',
     'nav.contact': 'Kontak',
+    'nav.resume' : 'Data Diri',
 
     // Hero Section
     'hero.greeting': 'Halo, Saya',

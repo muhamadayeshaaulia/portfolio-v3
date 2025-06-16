@@ -24,6 +24,7 @@ export const Header: React.FC = () => {
     { key: 'nav.skills', href: '#skills' },
     { key: 'nav.projects', href: '#projects' },
     { key: 'nav.contact', href: '#contact' },
+    { key: 'nav.resume', href: '#resume'}
   ];
 
   const scrollToSection = (href: string) => {
