@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react'; // Import useState
+import { motion, AnimatePresence } from 'framer-motion'; // Import motion dan AnimatePresence
+import { useLanguage } from '../../contexts/LanguageContext'; // Pastikan jalur ini benar
 
 /**
- * Komponen Resume untuk menampilkan resume dalam bentuk gambar.
+ * Komponen Resume untuk menampilkan resume dalam bentuk gambar dengan animasi membalik halaman buku.
  *
  * CATATAN PENTING:
  * Browser TIDAK DAPAT secara langsung mengekstrak halaman dari file PDF
@@ -13,6 +15,8 @@ import React from 'react';
  * Kode ini akan menampilkan gambar-gambar yang sudah dikonversi tersebut.
  */
 const Resume = () => {
+  const { t } = useLanguage(); // Gunakan hook useLanguage untuk mendapatkan fungsi terjemahan 't'
+
   // Ganti URL placeholder ini dengan path ke file gambar aktual dari halaman PDF resume Anda.
   // Contoh: Jika Anda telah mengonversi "cv.pdf" menjadi "cv-page-1.png",
   // dan menyimpannya di folder 'public/pdf', maka path-nya adalah "/pdf/cv-page-1.png".
@@ -23,41 +27,135 @@ const Resume = () => {
     "https://muhamadayeshaaulia.github.io/portfolio-v3/pdf/cv3.jpg", // Tambahkan lebih banyak path jika cv Anda memiliki lebih banyak halaman
   ];
 
+  // State untuk melacak halaman yang sedang ditampilkan
+  const [currentPage, setCurrentPage] = useState(0);
+  // State untuk melacak arah (digunakan untuk animasi)
+  const [direction, setDirection] = useState(0); // 0: tidak ada, 1: maju, -1: mundur
+
+  // Fungsi untuk maju ke halaman berikutnya
+  const handleNextPage = () => {
+    setDirection(1);
+    setCurrentPage((prevPage) =>
+      prevPage === resumeImageUrls.length - 1 ? 0 : prevPage + 1
+    );
+  };
+
+  // Fungsi untuk mundur ke halaman sebelumnya
+  const handlePrevPage = () => {
+    setDirection(-1);
+    setCurrentPage((prevPage) =>
+      prevPage === 0 ? resumeImageUrls.length - 1 : prevPage - 1
+    );
+  };
+
+  // Varian animasi untuk transisi halaman
+  const pageVariants = {
+    enter: (direction: number) => ({
+      rotateY: direction > 0 ? 90 : -90, // Halaman baru dimulai terlipat
+      opacity: 0,
+      scale: 0.9,
+      // transformOrigin diatur di sini untuk rotasi yang realistis
+      transformOrigin: direction > 0 ? 'left center' : 'right center',
+      zIndex: 1 // Halaman yang masuk awalnya di atas
+    }),
+    center: {
+      rotateY: 0, // Halaman tengah (saat aktif) tidak berputar
+      opacity: 1,
+      scale: 1,
+      transformOrigin: 'center center', // Asal rotasi di tengah saat statis
+      zIndex: 0 // Halaman tengah di belakang halaman yang beranimasi
+    },
+    exit: (direction: number) => ({
+      rotateY: direction > 0 ? -90 : 90, // Halaman keluar berputar menjauh
+      opacity: 0,
+      scale: 0.9,
+      // transformOrigin diatur di sini untuk rotasi yang realistis
+      transformOrigin: direction > 0 ? 'right center' : 'left center',
+      zIndex: 2 // Halaman yang keluar di atas halaman yang masuk
+    })
+  };
+
+  // Varian transisi
+  const pageTransition = {
+    rotateY: { type: "spring", stiffness: 300, damping: 30, duration: 0.6 },
+    opacity: { duration: 0.4 },
+    scale: { duration: 0.4 }
+  };
+
   return (
     <section id="resume" className="py-16 px-6 md:px-12 text-center rounded-lg shadow-lg m-8">
-      <h2 className="text-3xl font-bold mb-8 rounded-md">My Resume</h2>
-      <div className="max-w-4xl mx-auto space-y-8 rounded-md">
-        {/* Iterasi melalui daftar URL gambar resume dan tampilkan setiap gambar */}
-        {resumeImageUrls.map((imageUrl, index) => (
-          <div key={index} className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md flex justify-center items-center">
-            <img
-              src={imageUrl}
-              alt={`Resume Page ${index + 1}`}
-              className="max-w-full h-auto border-2 border-gray-300 dark:border-gray-700 rounded-md shadow-lg"
-              onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                const target = e.target as HTMLImageElement;
-                // Menangani kesalahan pemuatan gambar.
-                // Mengatur 'onerror' ke null mencegah loop tak terbatas jika gambar placeholder juga gagal dimuat.
-                target.onerror = null;
-                // Mengatur 'src' ke gambar placeholder atau pesan kesalahan jika gambar asli gagal dimuat.
-                target.src = `https://placehold.co/800x1100/FF0000/FFFFFF?text=Error+Loading+Page+${index + 1}`;
-              }}
-            />
-          </div>
-        ))}
-        <p className="text-lg mt-8 rounded-md">
-          Anda bisa melihat resume lengkap saya di atas.
-          Jika Anda ingin mengunduh, Anda bisa menambahkan tautan unduhan PDF di sini.
-        </p>
-        {/* Tombol unduh PDF - Menggunakan URL PDF yang Anda berikan */}
-        <a
-          href="https://muhamadayeshaaulia.github.io/portfolio-v3/pdf/cv.pdf"
-          download="cv.pdf"
-          className="inline-block mt-4 px-6 py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 transition-colors shadow-lg"
-        >
-          Download Resume (PDF)
-        </a>
+      {/* Judul yang responsif */}
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 rounded-md">
+        {t('resume.title')} {/* Menggunakan kunci terjemahan 'resume.title' */}
+      </h2>
+      {/* Container utama untuk animasi buku: responsif dan menjaga rasio aspek */}
+      {/* Gunakan max-w-sm untuk mobile, dan tingkatkan secara bertahap */}
+      <div className="relative mx-auto w-full max-w-sm sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-4xl 2xl:max-w-3xl"
+           style={{ paddingTop: '100%', perspective: '1200px' }}>{/* Rasio aspek A4 portrait (tinggi/lebar), 29.7cm/21cm */}
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.div
+            key={currentPage} // Kunci unik untuk setiap halaman agar AnimatePresence berfungsi
+            custom={direction}
+            variants={pageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={pageTransition}
+            className="absolute inset-0 flex justify-center items-center"
+            style={{ transformStyle: 'preserve-3d' }} // Penting untuk efek 3D
+          >
+            {/* 'backface-visibility: hidden' mencegah sisi belakang terlihat saat membalik */}
+            <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg shadow-md flex justify-center items-center w-full h-full" style={{ backfaceVisibility: 'hidden' }}>
+              <img
+                src={resumeImageUrls[currentPage]} // Tampilkan gambar halaman saat ini
+                alt={t('resume.alt_page', { page: currentPage + 1 })}
+                className="w-full h-full object-contain border-2 border-gray-300 dark:border-gray-700 rounded-md shadow-lg" // Pastikan gambar mengisi container
+                onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                  const target = e.target as HTMLImageElement;
+                  target.onerror = null;
+                  target.src = `https://placehold.co/800x1100/FF0000/FFFFFF?text=${t('resume.error_loading_page', { page: currentPage + 1 })}`;
+                }}
+              />
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Tombol Navigasi - Pastikan z-index lebih tinggi dari gambar */}
+        <div className="absolute inset-y-0 left-0 right-0 flex justify-between items-center z-20 px-2 sm:px-4"> {/* Kurangi padding horizontal untuk mobile */}
+          <button
+            onClick={handlePrevPage}
+            className="p-2 sm:p-3 bg-gray-700 text-white rounded-full shadow-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-500 transition-colors"
+            aria-label={t('resume.prev_page_button')}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            onClick={handleNextPage}
+            className="p-2 sm:p-3 bg-gray-700 text-white rounded-full shadow-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors"
+            aria-label={t('resume.next_page_button')}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
       </div>
+      {/* Konten di bawah animasi sekarang akan secara otomatis diposisikan dengan benar karena parent memiliki tinggi */}
+      <p className="text-lg mt-8 rounded-md">
+        {t('resume.description')}
+        <br />
+        {t('resume.download_prompt')}
+      </p>
+      {/* Tombol unduh PDF - Menggunakan URL PDF yang Anda berikan */}
+      <a
+        href="https://muhamadayeshaaulia.github.io/portfolio-v3/pdf/cv.pdf"
+        download="cv.pdf"
+        className="inline-block mt-4 px-6 py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 transition-colors shadow-lg"
+      >
+        {t('resume.download_button')}
+      </a>
     </section>
   );
 };

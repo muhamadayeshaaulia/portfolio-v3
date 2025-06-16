@@ -12,7 +12,7 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 // Objek terjemahan lengkap yang menggabungkan terjemahan portofolio dan komentar
-// Perhatikan bagaimana 'resume.error_loading_page' sekarang berupa fungsi
+// Perhatikan bagaimana 'resume.error_loading_page' dan 'resume.alt_page' sekarang berupa fungsi
 const translations = {
   en: {
     // Navigation
@@ -101,6 +101,9 @@ const translations = {
     'resume.description': 'You can view my complete resume above.',
     'resume.download_prompt': 'If you wish to download, you can add a PDF download link here.',
     'resume.download_button': 'Download Resume (PDF)',
+    'resume.alt_page': (options: { page: number }) => `Resume Page ${options.page}`,
+    'resume.prev_page_button': 'Previous Page',
+    'resume.next_page_button': 'Next Page',
     'resume.error_loading_page': (options: { page: number }) => `Error Loading Page ${options.page}`
   },
   id: {
@@ -190,7 +193,9 @@ const translations = {
     'resume.description': 'Anda dapat melihat resume lengkap saya di atas.',
     'resume.download_prompt': 'Jika Anda ingin mengunduh, Anda dapat menambahkan tautan unduhan PDF di sini.',
     'resume.download_button': 'Unduh Resume (PDF)',
-    // Contoh fungsi untuk terjemahan dinamis
+    'resume.alt_page': (options: { page: number }) => `Halaman Resume ${options.page}`,
+    'resume.prev_page_button': 'Halaman Sebelumnya',
+    'resume.next_page_button': 'Halaman Selanjutnya',
     'resume.error_loading_page': (options: { page: number }) => `Gagal Memuat Halaman ${options.page}`
   }
 };
